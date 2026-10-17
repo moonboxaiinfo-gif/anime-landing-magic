@@ -52,6 +52,13 @@
   --color-chart-4: var(--chart-4);
   --color-chart-5: var(--chart-5);
   --color-sidebar: var(--sidebar);
+  --color-lavender: var(--lavender);
+  --color-navy: var(--navy);
+  --color-cyan: var(--cyan);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --font-display: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar-primary: var(--sidebar-primary);
   --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
@@ -62,26 +69,38 @@
 }
 
 :root {
-  --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.129 0.042 264.695);
+  --radius: 1rem;
+  --background: oklch(0.985 0.006 300);
+  --foreground: oklch(0.2 0.05 270);
+  --navy: oklch(0.2 0.05 270);
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.129 0.042 264.695);
+  --card-foreground: oklch(0.2 0.05 270);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.129 0.042 264.695);
-  --primary: oklch(0.208 0.042 265.755);
-  --primary-foreground: oklch(0.984 0.003 247.858);
-  --secondary: oklch(0.968 0.007 247.896);
-  --secondary-foreground: oklch(0.208 0.042 265.755);
-  --muted: oklch(0.968 0.007 247.896);
-  --muted-foreground: oklch(0.554 0.046 257.417);
-  --accent: oklch(0.968 0.007 247.896);
-  --accent-foreground: oklch(0.208 0.042 265.755);
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.984 0.003 247.858);
-  --border: oklch(0.929 0.013 255.508);
-  --input: oklch(0.929 0.013 255.508);
-  --ring: oklch(0.704 0.04 256.788);
+  --popover-foreground: oklch(0.2 0.05 270);
+  --primary: oklch(0.49 0.24 293);
+  --primary-foreground: oklch(0.99 0 0);
+  --primary-glow: oklch(0.68 0.19 300);
+  --secondary: oklch(0.94 0.035 295);
+  --secondary-foreground: oklch(0.35 0.15 293);
+  --lavender: oklch(0.94 0.035 295);
+  --cyan: oklch(0.78 0.13 210);
+  --success: oklch(0.7 0.15 160);
+  --warning: oklch(0.8 0.14 75);
+  --muted: oklch(0.96 0.012 295);
+  --muted-foreground: oklch(0.55 0.03 260);
+  --accent: oklch(0.94 0.035 295);
+  --accent-foreground: oklch(0.35 0.15 293);
+  --destructive: oklch(0.6 0.2 25);
+  --destructive-foreground: oklch(0.99 0 0);
+  --border: oklch(0.92 0.02 295);
+  --input: oklch(0.92 0.02 295);
+  --ring: oklch(0.49 0.24 293);
+  --gradient-primary: linear-gradient(135deg, var(--primary), var(--primary-glow));
+  --gradient-hero: radial-gradient(60% 60% at 75% 30%, oklch(0.9 0.07 295 / 0.8), transparent 70%), radial-gradient(40% 40% at 10% 80%, oklch(0.92 0.05 210 / 0.5), transparent 70%);
+  --shadow-soft: 0 1px 2px oklch(0.2 0.05 270 / 0.04), 0 8px 24px -8px oklch(0.2 0.05 270 / 0.1);
+  --shadow-float: 0 30px 60px -20px oklch(0.35 0.15 293 / 0.3), 0 10px 20px -10px oklch(0.2 0.05 270 / 0.12);
+  --shadow-glow: 0 10px 30px -8px oklch(0.49 0.24 293 / 0.5);
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
@@ -141,4 +160,25 @@
     background-color: var(--color-background);
     color: var(--color-foreground);
   }
+}
+
+@layer base {
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--font-sans); overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+  h1, h2, h3 { font-family: var(--font-display); letter-spacing: -0.03em; }
+  :focus-visible { outline: 2px solid var(--ring); outline-offset: 3px; border-radius: 6px; }
+}
+@utility bg-gradient-primary { background-image: var(--gradient-primary); }
+@utility bg-hero { background-image: var(--gradient-hero); }
+@utility text-gradient { background-image: var(--gradient-primary); -webkit-background-clip: text; background-clip: text; color: transparent; }
+@utility shadow-soft { box-shadow: var(--shadow-soft); }
+@utility shadow-float { box-shadow: var(--shadow-float); }
+@utility shadow-glow { box-shadow: var(--shadow-glow); }
+@utility glass { background: oklch(1 0 0 / 0.75); backdrop-filter: blur(14px); }
+@keyframes floaty { 0%,100% { transform: translateY(0) } 50% { transform: translateY(-14px) } }
+@utility animate-floaty { animation: floaty 6s var(--ease) infinite; }
+@utility animate-floaty-slow { animation: floaty 9s var(--ease) infinite; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
 }
